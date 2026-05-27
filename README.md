@@ -1,4 +1,4 @@
-# 🚀 GitCV (Anti-Gravity Edition)
+# 🚀 GitCV 
 
 GitCV is a modern, React-based web application that transforms public GitHub profiles into polished, professional developer resumes. Designed with a custom "anti-gravity" glassmorphism aesthetic, it goes beyond a standard API fetch to provide automated skill inference, language data visualization, and PDF generation.
 

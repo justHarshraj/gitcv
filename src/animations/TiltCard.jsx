@@ -34,12 +34,9 @@ const TiltCard = ({ children, className = '' }) => {
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY,
-        rotateX,
-        transformStyle: "preserve-3d",
-      }}
-      className={`relative rounded-2xl bg-surface backdrop-blur-md border border-slate-700/50 shadow-float hover:shadow-glow transition-shadow duration-300 ${className}`}
+      style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+      // Updated className below:
+      className={`relative rounded-2xl bg-surface backdrop-blur-md border border-border shadow-float hover:shadow-glow transition-shadow duration-300 ${className}`}
     >
       {/* Content wrapper pushed slightly forward in 3D space */}
       <div style={{ transform: "translateZ(30px)" }} className="h-full w-full">

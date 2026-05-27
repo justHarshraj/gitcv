@@ -3,44 +3,32 @@
 @tailwind utilities;
 
 @layer base {
-  /* Default Anti-Gravity Theme */
+  /* Default Dark Theme */
   :root {
-    --bg-color: #0f172a;
-    --surface-color: rgba(30, 41, 59, 0.7);
-    --text-main: #f1f5f9;
+    --bg-color: #0f172a; 
+    --surface-color: #1e293b; 
+    --text-main: #f8fafc; 
     --text-muted: #94a3b8;
-    --brand-accent: #0ea5e9;
-    --brand-accent-hover: #0284c7;
-    --shadow-glow: 0 20px 40px -10px rgba(0,0,0,0.4), 0 0 20px rgba(14, 165, 233, 0.3);
-    --border-color: rgba(51, 65, 85, 0.5);
+    --brand-accent: #3b82f6;
+    --brand-accent-hover: #2563eb;
+    --shadow-glow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --border-color: #334155;
   }
 
-  /* Minimalist Print Theme (For PDF Export) */
-  [data-theme='print'] {
-    --bg-color: #ffffff;
-    --surface-color: #f8fafc;
+  /* Clean Light Theme (Specificity Increased) */
+  :root[data-theme='light'] {
+    --bg-color: #f8fafc; 
+    --surface-color: #ffffff; 
     --text-main: #0f172a;
-    --text-muted: #475569;
-    --brand-accent: #334155;
-    --brand-accent-hover: #0f172a;
-    --shadow-glow: none;
-    --border-color: #e2e8f0;
+    --text-muted: #475569; 
+    --brand-accent: #2563eb; 
+    --brand-accent-hover: #1d4ed8; 
+    --shadow-glow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    --border-color: #e2e8f0; 
   }
 
-  /* Cyberpunk Theme */
-  [data-theme='cyberpunk'] {
-    --bg-color: #2a0a29;
-    --surface-color: rgba(20, 5, 20, 0.8);
-    --text-main: #fce7f3;
-    --text-muted: #f472b6;
-    --brand-accent: #f0abfc;
-    --brand-accent-hover: #e879f9;
-    --shadow-glow: 0 0 15px #f0abfc, inset 0 0 10px #f0abfc;
-    --border-color: #f0abfc;
-  }
-
-  /* Terminal Hacker Theme */
-  [data-theme='terminal'] {
+  /* Terminal Hacker Theme (Specificity Increased) */
+  :root[data-theme='terminal'] {
     --bg-color: #000000;
     --surface-color: #000000;
     --text-main: #22c55e;

@@ -11,21 +11,24 @@ const ProfileCard = ({ profile, summary }) => {
         <img 
           src={profile.avatar_url} 
           alt={profile.login} 
-          className="w-32 h-32 rounded-full border-4 border-brand-500/30 shadow-glow"
+          className="w-32 h-32 rounded-full border-4 border-brand-500 shadow-glow"
         />
         <div className="flex-1 space-y-4">
           <div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">{profile.name || profile.login}</h1>
-            <a href={profile.html_url} target="_blank" rel="noreferrer" className="flex items-center justify-center md:justify-start gap-2 text-brand-400 hover:text-brand-300 transition-colors mt-1">
+            {/* text-main replaces text-white */}
+            <h1 className="text-3xl font-bold text-main tracking-tight">{profile.name || profile.login}</h1>
+            <a href={profile.html_url} target="_blank" rel="noreferrer" className="flex items-center justify-center md:justify-start gap-2 text-brand-400 hover:text-brand-500 transition-colors mt-1">
               <User className="w-4 h-4" /> @{profile.login}
             </a>
           </div>
           
-          <p className="text-slate-300 leading-relaxed text-sm md:text-base">
+          {/* text-muted replaces text-slate-300 */}
+          <p className="text-muted leading-relaxed text-sm md:text-base">
             {profile.bio || summary}
           </p>
 
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-slate-400 pt-2 border-t border-slate-700/50">
+          {/* text-muted and border-border applied here */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted pt-2 border-t border-border">
             {profile.location && (
               <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {profile.location}</span>
             )}

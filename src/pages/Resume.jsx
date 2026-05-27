@@ -24,7 +24,7 @@ const Resume = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [resumeData, setResumeData] = useState(null);
-  const [currentTheme, setCurrentTheme] = useState('default');
+  const [currentTheme, setCurrentTheme] = useState('dark');
   
   // Manage the order of the sections
   const [sections, setSections] = useState(['profile', 'heatmap', 'skills', 'grid']);
@@ -63,10 +63,10 @@ const Resume = () => {
   };
 
   const exportPDF = async () => {
-    // 1. Force Print Theme for clean PDF
-    document.documentElement.setAttribute('data-theme', 'print');
+    // Force Light Theme for a clean PDF
+    document.documentElement.setAttribute('data-theme', 'light');
     
-    // 2. Wait for DOM to paint the new colors
+    // Wait for DOM to paint the new colors
     await new Promise(resolve => setTimeout(resolve, 300));
 
     const element = document.getElementById('resume-export-target');
@@ -79,8 +79,12 @@ const Resume = () => {
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
-      // 3. Restore the user's selected theme
-      document.documentElement.setAttribute('data-theme', currentTheme);
+      // Restore the user's selected theme
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+      }
     });
   };
 

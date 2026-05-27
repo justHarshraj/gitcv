@@ -5,7 +5,12 @@ const ThemeToggle = ({ currentTheme, setTheme }) => {
   const handleThemeChange = (e) => {
     const newTheme = e.target.value;
     setTheme(newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
+    
+    if (newTheme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', newTheme);
+    }
   };
 
   return (
@@ -16,10 +21,9 @@ const ThemeToggle = ({ currentTheme, setTheme }) => {
         onChange={handleThemeChange}
         className="bg-transparent text-main text-sm font-medium focus:outline-none cursor-pointer"
       >
-        <option value="default">Anti-Gravity</option>
-        <option value="cyberpunk">Cyberpunk</option>
+        <option value="dark">Dark Theme</option>
+        <option value="light">Light Theme</option>
         <option value="terminal">Terminal</option>
-        <option value="print">Minimal Print</option>
       </select>
     </div>
   );
