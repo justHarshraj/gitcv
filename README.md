@@ -7,6 +7,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-38B2AC.svg)](https://tailwindcss.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+🚀 **Live Demo:** [https://gitcv-o4ya8ediw-harshrajs1k-5992s-projects.vercel.app/](https://gitcv-o4ya8ediw-harshrajs1k-5992s-projects.vercel.app/)
+
 **GitCV** is a modern, client-side React application that transforms any public GitHub profile into a beautifully formatted, interactive, and print-ready developer resume. 
 
 Unlike standard API-fetch tutorials, GitCV is engineered to handle real-world constraints. It features intelligent rate-limit protections, custom algorithmic skill inference, dynamic CSS-variable theming, and an advanced template engine capable of generating everything from strict ATS-compliant documents to interactive 3D dashboards.
