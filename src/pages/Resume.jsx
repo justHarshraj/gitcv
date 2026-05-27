@@ -22,8 +22,17 @@ const Resume = () => {
   const [error, setError] = useState(null);
   const [resumeData, setResumeData] = useState(null);
   
-  const [currentTheme, setCurrentTheme] = useState('dark');
+  const [currentTheme, setCurrentTheme] = useState('grid');
   const [currentTemplate, setCurrentTemplate] = useState('modern'); // 'modern', 'ats', or 'portfolio'
+
+  // ADD THIS NEW USE-EFFECT: It forces the HTML tag to update on page load!
+  useEffect(() => {
+    if (currentTheme === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+    }
+  }, [currentTheme]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -96,11 +105,13 @@ const Resume = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-12 transition-colors duration-300">
+    // REMOVED 'bg-background' from here so the body's grid lines can show through
+    <div className="min-h-screen py-8 px-4 sm:px-12 transition-colors duration-300">
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* Navigation & Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface p-4 rounded-2xl border border-border shadow-float backdrop-blur-md">
+        {/* Updated Navigation Bar: Fully rounded (pill shape) and better padding */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface px-6 py-3.5 rounded-full border border-border shadow-float backdrop-blur-md">
+          
           <button onClick={() => navigate('/')} className="flex items-center gap-2 text-muted hover:text-brand-400 transition-colors">
             <HomeIcon className="w-5 h-5" /> New Search
           </button>
@@ -108,7 +119,9 @@ const Resume = () => {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <TemplateSelector currentTemplate={currentTemplate} setTemplate={setCurrentTemplate} />
             <ThemeToggle currentTheme={currentTheme} setTheme={setCurrentTheme} />
-            <button onClick={exportPDF} className="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-xl font-medium shadow-float transition-all active:scale-95">
+            
+            {/* Fully rounded pill button for Export */}
+            <button onClick={exportPDF} className="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-6 py-2 rounded-full font-medium shadow-glow transition-all active:scale-95">
               <Download className="w-4 h-4" /> Export PDF
             </button>
           </div>

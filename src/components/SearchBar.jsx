@@ -38,7 +38,7 @@ const SearchBar = ({ onSearch, isLoading }) => {
         <button
           type="submit"
           disabled={isLoading}
-          className="absolute inset-y-2 right-2 px-6 bg-brand-600 hover:bg-brand-500 text-white rounded-xl font-medium transition-colors disabled:opacity-50"
+          className="absolute inset-y-2 right-2 px-6 bg-brand-500 hover:bg-brand-600 text-white rounded-full font-medium shadow-glow transition-colors disabled:opacity-50"
         >
           Generate
         </button>

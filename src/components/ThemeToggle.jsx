@@ -14,7 +14,7 @@ const ThemeToggle = ({ currentTheme, setTheme }) => {
   };
 
   return (
-    <div className="flex items-center gap-2 bg-surface border border-border px-3 py-1.5 rounded-xl shadow-float backdrop-blur-md">
+    <div className="flex items-center gap-2 bg-surface border border-border px-3 py-1.5 rounded-full shadow-float backdrop-blur-md">
       <Palette className="w-4 h-4 text-brand-400" />
       <select 
         value={currentTheme}
@@ -23,7 +23,7 @@ const ThemeToggle = ({ currentTheme, setTheme }) => {
       >
         <option value="dark">Dark Theme</option>
         <option value="light">Light Theme</option>
-        <option value="terminal">Terminal</option>
+        <option value="grid">Canvas Grid</option>
       </select>
     </div>
   );
