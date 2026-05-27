@@ -1,16 +1,52 @@
 # Assessment Questionnaire
 
-**1. How do I run your project?**
-Open the project directory in your terminal, run `npm install` to grab the dependencies (React, Vite, Axios, Tailwind, Framer Motion, Recharts, and html2pdf), and then run `npm run dev`.
+**1. How to run**
+Getting this project up and running is super straightforward since it’s a client-side Vite app.
 
-**2. Why did you choose this tech stack?**
-I chose React with Vite for rapid execution and a component-driven architecture. TailwindCSS was strictly used to implement the complex glassmorphism and shadow layers without bloating the CSS tree. Framer Motion was added to handle the complex 3D CSS transforms (the tilt effect and floating loops) because it manages animation frames outside of the main React render cycle, preventing performance drops. Axios handles the API requests because its built-in timeout configurations and error-interceptors make handling REST limits much cleaner than the native Fetch API.
+Assuming you have Node.js installed on your machine, just open your terminal, navigate to the project folder, and run:
 
-**3. Describe one real edge case your application handles.**
-A major flaw in naive GitHub API integrations is rate limiting. Unauthenticated users only get 60 requests an hour. To generate a language chart, you have to hit a unique endpoint for *every single repository*. If a user has 40 repos, one search would eat up almost the entire hourly limit. I solved this by first fetching all repos, sorting them client-side by star/fork count, slicing the top 5, and *only* fetching language data for those 5. This provides an accurate representation of their primary stack while protecting the app from crashing due to `403 Forbidden` errors. 
+`npm install` (This grabs all the packages like React, Vite, Tailwind, Framer Motion, Recharts, and html2pdf).
 
-**4. Did you use AI in this project?**
-AI was used purely as a sounding board during the architectural phase to validate my approach to managing the Framer Motion transforms concurrently with the `html2pdf.js` canvas capturing process. All business logic, CSS configurations, and API optimization scripts were implemented manually to ensure assessment compliance.
+`npm run dev`
 
-**5. What is an honest gap or improvement you would make if you had more time?**
-If I had more time, I would implement an OAuth 2.0 GitHub login flow. By authenticating the user, the GitHub API rate limit expands from 60 to 5,000 requests per hour. Furthermore, authentication would allow GitCV to analyze their *private* repository contributions, allowing the algorithm to paint a much more accurate picture of a developer's daily work without exposing the actual private source code.
+That’s it! The terminal will spit out a local host link (usually `http://localhost:5173`). Click that, and you're good to go. No database setup or environment variables are strictly required to test it.
+
+**2. Stack choice**
+I went with React + Vite for the core framework, Tailwind CSS for styling, and Framer Motion for the physics/animations.
+
+I picked this stack because I wanted the app to feel incredibly fast and look like a premium, modern dashboard. Vite makes development lightning-fast, and React's component model is perfect for building the different resume templates and the drag-and-drop editor. Tailwind was a lifesaver here—trying to manage the complex glassmorphism, glowing shadows, and three different CSS-variable themes using standard CSS files would have been an absolute nightmare to maintain.
+
+What would have been a worse choice? Going with a heavy, full-stack framework like Next.js or Remix. Since this app doesn't have a database, user authentication (yet), or a need for intense Server-Side Rendering (SSR) for SEO, a full Node backend would have been massive overkill. It would have made deployment slower and the codebase needlessly complicated for what is essentially an API-consumption and data-visualization tool.
+
+**3. One real edge case**
+I’m actually really proud of how I handled the GitHub API Rate Limit exhaustion.
+
+Unauthenticated users only get 60 API requests per hour. The problem? To build the LanguageChart, you have to hit a specific `/languages` endpoint for every single repository a user has. If a recruiter searched for a developer with 80 repos, the app would try to make 80 API calls instantly, nuke the rate limit, and crash with a `403 Forbidden` error.
+
+**Where it is:** In `src/services/githubApi.js` (around lines 33-35).
+
+**How I handled it:** Instead of fetching languages for everything, the code first sorts the user's repositories locally by star count. Then, it slices the array and only maps the `/languages` fetch promises to their top 5 most popular repositories.
+
+Without this handling, the app would literally break after a single search for a prolific developer. By adding this slice, we get a highly accurate picture of their core tech stack while only using 6 API calls total (1 for profile, 1 for repos, 4-5 for languages).
+
+**4. AI usage**
+I definitely utilized an AI assistant (specifically an LLM) as a collaborative pair-programmer for this project.
+
+**What I asked for:** I used it as an architectural sounding board. I asked it for the best way to structure a multi-theme engine using Tailwind without relying on bloated classes.
+
+**What it gave me:** It provided the concept of mapping Tailwind utility classes (like `bg-surface`) to CSS variables (`var(--surface-color)`) and using a `data-theme` attribute on the HTML tag.
+
+**What I asked for:** I also asked it for the exact syntax for `html2pdf.js` because its configuration object is notoriously picky.
+
+**Where I had to change the AI's output:**
+The AI originally suggested just attaching `html2pdf().from(element).save()` directly to my export button. However, it completely missed the fact that `html2pdf.js` cannot render 3D CSS transforms or SVG animations natively—it just prints blank boxes.
+
+I had to manually step in and write an async orchestration function in `src/pages/Resume.jsx` that temporarily forces the app into a static "Light" print theme, waits 300 milliseconds for the DOM to repaint without animations, captures the PDF, and then flips the theme back to what the user had selected. The AI didn't catch that visual edge case, but testing it locally made it obvious!
+
+**5. Honest gap**
+Honestly, the biggest gap right now is the lack of OAuth 2.0 (Login with GitHub).
+
+Because the app relies on unauthenticated API calls, we are entirely at the mercy of that 60-requests-per-hour limit. If three recruiters are testing my app at the same time, it’s going to hit a wall pretty fast. Furthermore, because it's unauthenticated, the "Green Square" heatmap and the proficiency scoring can only see public repositories. A lot of enterprise developers write 90% of their code in private company repos, meaning GitCV might make them look less experienced than they actually are.
+
+**How I would fix it with another day:**
+I would implement Firebase Auth or standard NextAuth. By having the user click "Sign in with GitHub," the API rate limit jumps from 60 to 5,000 per hour, and (if they grant permission) I could fetch their total private commit counts. It would make the generated resume exponentially more accurate and completely remove the risk of the app timing out during a demo.
